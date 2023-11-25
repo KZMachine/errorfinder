@@ -1,8 +1,4 @@
 import './App.css';
-import { Box } from '@mui/material';
-
-
-
 
 function App() {
   return (
@@ -12,10 +8,8 @@ function App() {
           onChange={handleFileSelect}
           type="file" name="file" id="file"/>
         <pre id="fileContent"></pre>
-        <div className="lineNumberSpace">
-          {/* <p  className="lineNumber">1</p>
-          <p className="lineNumber">2</p> */}
-        </div>
+        <div className="lineNumberSpace"></div>
+        <div className="codeSpace"></div>
       </header>
     </div>
   );
@@ -26,8 +20,10 @@ const filestore = [];
 
 function handleFileSelect(evt) {
   const file = evt.target.files[0];
+  if (!file) { // Prevents crash when no file is selected
+    return;
+  }
   const reader = new FileReader();
-  // document.getElementsByClassName("lineNumber")[0].textContent = ""
   reader.onload = function (event) {
     const fileContent = event.target.result;
     const fileName = file.name;
@@ -36,18 +32,32 @@ function handleFileSelect(evt) {
       name: fileName,
       content: fileContent
     }
+
     filestore.push(fileData)
-    console.log(filestore)
+
     const fileSplit = fileContent.split('\r\n')
     const numLines = fileContent.split('\r\n').length
-    const lineNumberSpaceDiv = document.getElementsByClassName("lineNumberSpace").item(0)
-    console.log(lineNumberSpaceDiv)
-    for (let index = 0; index < 1005; index++) {
-      const line = document.createElement("P");
-      line.className = "lineNumber line-" + index;
-      // document.getElementsByClassName("lineNumber")[0].textContent += index +"\t" +fileSplit[index] + "\r\n"
-      line.textContent = index
-      lineNumberSpaceDiv.appendChild(line);
+    console.log(fileContent)
+
+    const lineNumberSpaceDiv = document.getElementsByClassName("lineNumberSpace").item(0);
+    const codeSpaceDiv = document.getElementsByClassName("codeSpace").item(0);
+
+    lineNumberSpaceDiv.innerHTML = ""
+    codeSpaceDiv.innerHTML = ""
+
+    for (let index = 0; index < numLines; index++) {
+      const numLine = document.createElement("P");
+      const codeLine = document.createElement("P");
+
+      numLine.className = "lineNumber line-" + index;
+      numLine.textContent = index
+      lineNumberSpaceDiv.appendChild(numLine);
+
+      codeLine.className = "lineCode line-" + index;
+      if (index < numLines){
+        codeLine.textContent = fileSplit[index];
+      }
+      codeSpaceDiv.appendChild(codeLine);
     }
     console.log(fileData)
   };
