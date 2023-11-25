@@ -13,14 +13,23 @@
   color: white;
 }
 
-.lineNumberStorage {
+.lineNumberSpace {
   width: fit-content;
+  padding-left: 5pt;
+  padding-right: 5pt;
   white-space: nowrap;
-  background-color: orange;
+  background-color: rgb(164, 159, 150);
+  margin: 0;
 }
+
 .lineNumber {
-  background-color: rgb(135, 140, 140);
+  /* background-color: rgb(160, 246, 246); */
   text-align: left;
-  tab-size: 500pt;
   white-space: pre-line;
+  margin: 0;
+  min-width: max-content;
+}
+
+.lineNumber:hover {
+  background-color: rgb(120, 115, 109);
 }

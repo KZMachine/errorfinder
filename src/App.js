@@ -12,8 +12,9 @@ function App() {
           onChange={handleFileSelect}
           type="file" name="file" id="file"/>
         <pre id="fileContent"></pre>
-        <div className="lineNumberStorage">
-          <p className="lineNumber"></p>
+        <div className="lineNumberSpace">
+          {/* <p  className="lineNumber">1</p>
+          <p className="lineNumber">2</p> */}
         </div>
       </header>
     </div>
@@ -21,13 +22,12 @@ function App() {
 }
 
 const filestore = [];
-console.log(document.getElementsByClassName("lineNumber"))
 
 
 function handleFileSelect(evt) {
   const file = evt.target.files[0];
   const reader = new FileReader();
-  document.getElementsByClassName("lineNumber")[0].textContent = ""
+  // document.getElementsByClassName("lineNumber")[0].textContent = ""
   reader.onload = function (event) {
     const fileContent = event.target.result;
     const fileName = file.name;
@@ -40,12 +40,15 @@ function handleFileSelect(evt) {
     console.log(filestore)
     const fileSplit = fileContent.split('\r\n')
     const numLines = fileContent.split('\r\n').length
-    for (let index = 0; index < numLines; index++) {
-      document.getElementsByClassName("lineNumber")[0].textContent += index +"\t" +fileSplit[index] + "\r\n"
-      console.log(index)
+    const lineNumberSpaceDiv = document.getElementsByClassName("lineNumberSpace").item(0)
+    console.log(lineNumberSpaceDiv)
+    for (let index = 0; index < 1005; index++) {
+      const line = document.createElement("P");
+      line.className = "lineNumber line-" + index;
+      // document.getElementsByClassName("lineNumber")[0].textContent += index +"\t" +fileSplit[index] + "\r\n"
+      line.textContent = index
+      lineNumberSpaceDiv.appendChild(line);
     }
-    
-    document.getElementById('fileContent').textContent = fileContent;
     console.log(fileData)
   };
   console.log(evt.target.files[0])
