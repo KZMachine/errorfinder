@@ -35,6 +35,10 @@
 .lineCode {
   margin: 0;
   flex-grow: 1;
+  white-space: pre;
+  height:fit-content;
+  width: 900pt;
+  word-wrap: break-word
 }
 
 .lineCode:hover {

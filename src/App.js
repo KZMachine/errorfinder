@@ -35,9 +35,17 @@ function handleFileSelect(evt) {
 
     filestore.push(fileData)
 
-    const fileSplit = fileContent.split('\r\n')
-    const numLines = fileContent.split('\r\n').length
-    console.log(fileContent)
+    // const fileSplit = fileContent.split(/[\r\n]+/g)
+    // const fileSplit = fileContent.split(/\r\n+/)
+    const fileSplit = fileContent.split(/\r\n|\n|\r/)
+    
+    const numLines = fileSplit.length
+    console.log(fileSplit);
+
+    for (let index = 0; index < fileContent.length; index++){
+      console.log(fileContent[index]);
+      console.log(fileContent.charCodeAt(index));
+    }
 
     const lineNumberSpaceDiv = document.getElementsByClassName("lineNumberSpace").item(0);
     const codeSpaceDiv = document.getElementsByClassName("codeSpace").item(0);
@@ -46,17 +54,25 @@ function handleFileSelect(evt) {
     codeSpaceDiv.innerHTML = ""
 
     for (let index = 0; index < numLines; index++) {
+      const lineNum = index + 1
       const numLine = document.createElement("P");
       const codeLine = document.createElement("P");
 
-      numLine.className = "lineNumber line-" + index;
-      numLine.textContent = index
-      lineNumberSpaceDiv.appendChild(numLine);
+      numLine.className = "lineNumber line-" + lineNum;
+      numLine.textContent = lineNum
+      
 
-      codeLine.className = "lineCode line-" + index;
-      if (index < numLines){
+      codeLine.className = "lineCode line-" + lineNum;
+      if (fileSplit[index] === "") {
+        codeLine.textContent = "\r\n";
+      } else {
         codeLine.textContent = fileSplit[index];
       }
+      console.log(fileSplit[index]);
+      
+      lineNumberSpaceDiv.setAttribute("height", codeSpaceDiv.getAttribute("height"));
+
+      lineNumberSpaceDiv.appendChild(numLine);
       codeSpaceDiv.appendChild(codeLine);
     }
     console.log(fileData)
@@ -66,3 +82,9 @@ function handleFileSelect(evt) {
 }
 
 export default App;
+
+/*
+  To-Fix list:
+    Extend the code line all the way across
+    ensure height is flexible
+*/
