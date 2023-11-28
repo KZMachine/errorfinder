@@ -35,17 +35,9 @@ function handleFileSelect(evt) {
 
     filestore.push(fileData)
 
-    // const fileSplit = fileContent.split(/[\r\n]+/g)
-    // const fileSplit = fileContent.split(/\r\n+/)
     const fileSplit = fileContent.split(/\r\n|\n|\r/)
     
     const numLines = fileSplit.length
-    console.log(fileSplit);
-
-    for (let index = 0; index < fileContent.length; index++){
-      console.log(fileContent[index]);
-      console.log(fileContent.charCodeAt(index));
-    }
 
     const lineNumberSpaceDiv = document.getElementsByClassName("lineNumberSpace").item(0);
     const codeSpaceDiv = document.getElementsByClassName("codeSpace").item(0);
@@ -55,8 +47,8 @@ function handleFileSelect(evt) {
 
     for (let index = 0; index < numLines; index++) {
       const lineNum = index + 1
-      const numLine = document.createElement("P");
-      const codeLine = document.createElement("P");
+      const numLine = document.createElement("div");
+      const codeLine = document.createElement("div");
 
       numLine.className = "lineNumber line-" + lineNum;
       numLine.textContent = lineNum
@@ -68,23 +60,16 @@ function handleFileSelect(evt) {
       } else {
         codeLine.textContent = fileSplit[index];
       }
-      console.log(fileSplit[index]);
-      
-      lineNumberSpaceDiv.setAttribute("height", codeSpaceDiv.getAttribute("height"));
 
       lineNumberSpaceDiv.appendChild(numLine);
       codeSpaceDiv.appendChild(codeLine);
+
+      const codeLineHeight = codeLine.clientHeight;
+      numLine.style.height = codeLineHeight + "px";
+      codeLine.style.height = codeLineHeight + "px";
     }
-    console.log(fileData)
   };
-  console.log(evt.target.files[0])
   reader.readAsText(evt.target.files[0])
 }
 
 export default App;
-
-/*
-  To-Fix list:
-    Extend the code line all the way across
-    ensure height is flexible
-*/
