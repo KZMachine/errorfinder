@@ -3,6 +3,13 @@
   background-color: rgb(255, 255, 255);
 }
 
+.fileSelector {
+  background-color: gray;
+  width: fit-content;
+  border: solid;
+  border-color: rgb(65, 65, 65);
+}
+
 .lineNumberSpace {
   width: fit-content;
   padding-left: 5pt;
